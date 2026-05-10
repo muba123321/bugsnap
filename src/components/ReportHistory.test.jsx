@@ -51,4 +51,32 @@ describe('ReportHistory', () => {
     fireEvent.click(screen.getByRole('button', { name: /expand/i }))
     expect(screen.getByText('Login broken')).toBeInTheDocument()
   })
+
+  it('shows "just now" for timestamps less than 1 minute ago', () => {
+    const entry = makeEntry('1', 'Recent bug')
+    entry.timestamp = Date.now() - 30000 // 30 seconds ago
+    render(<ReportHistory history={[entry]} onSelect={vi.fn()} onRemove={vi.fn()} onClear={vi.fn()} />)
+    expect(screen.getByText('just now')).toBeInTheDocument()
+  })
+
+  it('shows "Xm ago" for timestamps less than 1 hour ago', () => {
+    const entry = makeEntry('1', 'Recent bug')
+    entry.timestamp = Date.now() - 5 * 60 * 1000 // 5 minutes ago
+    render(<ReportHistory history={[entry]} onSelect={vi.fn()} onRemove={vi.fn()} onClear={vi.fn()} />)
+    expect(screen.getByText('5m ago')).toBeInTheDocument()
+  })
+
+  it('shows "Xh ago" for timestamps less than 24 hours ago', () => {
+    const entry = makeEntry('1', 'Recent bug')
+    entry.timestamp = Date.now() - 3 * 60 * 60 * 1000 // 3 hours ago
+    render(<ReportHistory history={[entry]} onSelect={vi.fn()} onRemove={vi.fn()} onClear={vi.fn()} />)
+    expect(screen.getByText('3h ago')).toBeInTheDocument()
+  })
+
+  it('shows localized date for timestamps older than 24 hours', () => {
+    const entry = makeEntry('1', 'Old bug')
+    entry.timestamp = new Date('2026-01-15').getTime()
+    render(<ReportHistory history={[entry]} onSelect={vi.fn()} onRemove={vi.fn()} onClear={vi.fn()} />)
+    expect(screen.getByText(new Date('2026-01-15').toLocaleDateString())).toBeInTheDocument()
+  })
 })
