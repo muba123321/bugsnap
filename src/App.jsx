@@ -21,12 +21,14 @@ export default function App() {
   const [report, setReport] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isInvalidKey, setIsInvalidKey] = useState(false)
 
   if (!apiKey) return <ApiKeySetup onSave={setApiKey} />
 
   async function handleGenerate(inputText) {
     setLoading(true)
     setError('')
+    setIsInvalidKey(false)
     try {
       const result = await generateReport(inputText, apiKey)
       setReport(result)
@@ -38,9 +40,12 @@ export default function App() {
         report: result,
       })
     } catch (err) {
-      setError(err.message === 'INVALID_KEY'
-        ? 'Invalid API key. Please update it.'
-        : 'Something went wrong. Please try again.')
+      if (err.message === 'INVALID_KEY') {
+        setIsInvalidKey(true)
+        setError('Invalid API key. Please update it.')
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
@@ -79,7 +84,7 @@ export default function App() {
         {error && (
           <div style={{ marginTop: '16px', padding: '14px 18px', background: 'rgba(255,45,45,0.06)', border: '1px solid rgba(255,45,45,0.2)', borderRadius: '8px', fontSize: '13px', color: '#ff6b6b' }}>
             {error}
-            {error.includes('Invalid API key') && (
+            {isInvalidKey && (
               <button onClick={clearApiKey} style={{ marginLeft: '8px', background: 'none', border: 'none', color: '#ff2d2d', cursor: 'pointer', fontFamily: "'DM Mono', monospace", fontSize: '13px', textDecoration: 'underline' }}>
                 Update it
               </button>
