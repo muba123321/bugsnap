@@ -29,7 +29,7 @@ export default function BugInput({ onGenerate, loading }) {
         }}
       />
       <button
-        onClick={() => input.trim() && onGenerate(input)}
+        onClick={() => onGenerate(input)}
         disabled={loading || !input.trim()}
         style={{
           marginTop: '16px', width: '100%', padding: '16px', background: '#ff2d2d',
