@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { formatReport } from '../lib/formatReport'
 
 const CopyIcon = () => (
@@ -10,12 +10,24 @@ const CopyIcon = () => (
 
 function CopyButton({ label, format, report }) {
   const [copied, setCopied] = useState(false)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return
+    const id = setTimeout(() => setCopied(false), 2000)
+    return () => clearTimeout(id)
+  }, [copied])
+
+  useEffect(() => {
+    if (!error) return
+    const id = setTimeout(() => setError(false), 2000)
+    return () => clearTimeout(id)
+  }, [error])
 
   function handleCopy() {
-    navigator.clipboard.writeText(formatReport(report, format)).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
+    navigator.clipboard.writeText(formatReport(report, format))
+      .then(() => setCopied(true))
+      .catch(() => setError(true))
   }
 
   return (
@@ -23,15 +35,15 @@ function CopyButton({ label, format, report }) {
       onClick={handleCopy}
       style={{
         flex: 1, padding: '13px', background: 'transparent',
-        border: `1px solid ${copied ? '#00c48c' : '#2a2d38'}`,
-        borderRadius: '10px', color: copied ? '#00c48c' : '#888',
+        border: `1px solid ${copied ? '#00c48c' : error ? '#ff2d2d' : '#2a2d38'}`,
+        borderRadius: '10px', color: copied ? '#00c48c' : error ? '#ff6b6b' : '#888',
         fontFamily: "'DM Mono', monospace", fontSize: '12px',
         cursor: 'pointer', display: 'flex', alignItems: 'center',
         justifyContent: 'center', gap: '8px', letterSpacing: '1px', transition: 'all 0.2s',
       }}
     >
       <CopyIcon />
-      {copied ? 'COPIED!' : label}
+      {copied ? 'COPIED!' : error ? 'FAILED' : label}
     </button>
   )
 }
