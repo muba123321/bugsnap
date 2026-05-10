@@ -29,6 +29,7 @@ export default function App() {
     setLoading(true)
     setError('')
     setIsInvalidKey(false)
+    setReport(null)
     try {
       const result = await generateReport(inputText, apiKey)
       setReport(result)
@@ -94,7 +95,7 @@ export default function App() {
 
         {report && <ReportCard report={report} />}
 
-        <ReportHistory history={history} onSelect={r => { setReport(r); setError('') }} onRemove={removeReport} onClear={clearHistory} />
+        <ReportHistory history={history} onSelect={r => { setReport(r); setError(''); setIsInvalidKey(false) }} onRemove={removeReport} onClear={clearHistory} />
       </div>
     </div>
   )

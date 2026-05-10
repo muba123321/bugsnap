@@ -10,7 +10,7 @@ export default function ApiKeySetup({ onSave }) {
       return
     }
     setError('')
-    onSave(key)
+    onSave(key.trim())
   }
 
   return (

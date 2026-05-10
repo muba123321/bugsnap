@@ -66,4 +66,14 @@ describe('App', () => {
     expect(screen.getByText(/something went wrong/i)).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /update it/i })).not.toBeInTheDocument()
   })
+
+  it('adds the generated report to history after success', async () => {
+    localStorage.setItem('bugsnap_api_key', 'sk-ant-valid')
+    generateReport.mockResolvedValueOnce(MOCK_REPORT)
+    render(<App />)
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'login broken' } })
+    await act(async () => { fireEvent.click(screen.getByRole('button', { name: /generate/i })) })
+    // Report title appears in both ReportCard and ReportHistory
+    expect(screen.getAllByText('Login broken').length).toBeGreaterThanOrEqual(2)
+  })
 })
