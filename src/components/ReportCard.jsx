@@ -18,7 +18,7 @@ export default function ReportCard({ report }) {
         <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '22px', letterSpacing: '1.5px', color: '#fff', lineHeight: '1.2', flex: 1 }}>
           {report.title}
         </div>
-        <div style={{ padding: '5px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', flexShrink: 0, background: severityColor.bg, color: severityColor.text }}>
+        <div role="status" aria-label={`Severity: ${report.severity}`} style={{ padding: '5px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', flexShrink: 0, background: severityColor.bg, color: severityColor.text }}>
           {report.severity}
         </div>
       </div>
