@@ -32,7 +32,11 @@ async function callApi(inputText, apiKey) {
     }),
   })
   if (response.status === 401) throw new Error('INVALID_KEY')
-  if (!response.ok) throw new Error('NETWORK_ERROR')
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}))
+    const msg = body?.error?.message ?? `HTTP ${response.status}`
+    throw new Error(`NETWORK_ERROR: ${msg}`)
+  }
   const data = await response.json()
   const raw = data.content?.find(b => b.type === 'text')?.text ?? ''
   return JSON.parse(raw.replace(/```json|```/g, '').trim())
@@ -42,7 +46,7 @@ export async function generateReport(inputText, apiKey) {
   try {
     return await callApi(inputText, apiKey)
   } catch (err) {
-    if (err.message === 'INVALID_KEY' || err.message === 'NETWORK_ERROR') throw err
+    if (err.message === 'INVALID_KEY' || err.message.startsWith('NETWORK_ERROR')) throw err
     return await callApi(inputText, apiKey)
   }
 }

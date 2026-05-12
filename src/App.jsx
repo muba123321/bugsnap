@@ -45,7 +45,10 @@ export default function App() {
         setIsInvalidKey(true)
         setError('Invalid API key. Please update it.')
       } else {
-        setError('Something went wrong. Please try again.')
+        const detail = err.message?.startsWith('NETWORK_ERROR:')
+          ? err.message.replace('NETWORK_ERROR: ', '')
+          : 'Something went wrong. Please try again.'
+        setError(detail)
       }
     } finally {
       setLoading(false)
