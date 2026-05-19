@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { formatReport } from '../lib/formatReport'
-import { colors, fontSize, radius } from '../theme'
+import { colors, fontSize } from '../theme'
 
 const CopyIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -37,7 +37,7 @@ function CopyButton({ label, format, report }) {
       style={{
         flex: 1, padding: '13px', background: 'transparent',
         border: `1px solid ${copied ? '#00c48c' : error ? colors.accent : colors.borderStrong}`,
-        borderRadius: radius.md,
+        borderRadius: '8px',
         color: copied ? '#00c48c' : error ? '#ff6b6b' : colors.textMuted,
         fontFamily: "'DM Mono', monospace", fontSize: fontSize.sm,
         cursor: 'pointer', display: 'flex', alignItems: 'center',

@@ -46,7 +46,7 @@ export default function ReportHistory({ history, onSelect, onRemove, onClear }) 
                 <div style={{ fontSize: fontSize.md, color: colors.textSecondary, lineHeight: '1.4' }}>{entry.title}</div>
                 <div style={{ fontSize: fontSize.xs, color: colors.textMuted, marginTop: '4px' }}>{formatDate(entry.timestamp)}</div>
               </div>
-              <button onClick={() => onRemove(entry.id)} aria-label="delete" style={{ background: 'none', border: 'none', color: colors.textMuted, fontSize: '14px', cursor: 'pointer', padding: '0 2px', lineHeight: 1, flexShrink: 0 }}>
+              <button onClick={() => onRemove(entry.id)} aria-label="delete" style={{ background: 'none', border: 'none', color: colors.textMuted, fontSize: fontSize.base, cursor: 'pointer', padding: '0 2px', lineHeight: 1, flexShrink: 0 }}>
                 ✕
               </button>
             </div>
