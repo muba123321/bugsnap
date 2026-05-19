@@ -1,4 +1,5 @@
 import ExportMenu from './ExportMenu'
+import { colors, fontSize } from '../theme'
 
 const SEVERITY_COLORS = {
   Critical: { bg: '#ff2d2d', text: '#fff' },
@@ -7,18 +8,21 @@ const SEVERITY_COLORS = {
   Low:      { bg: '#00c48c', text: '#fff' },
 }
 
-const sectionLabel = { fontSize: '10px', letterSpacing: '2.5px', textTransform: 'uppercase', color: '#ff2d2d', marginBottom: '10px' }
+const sectionLabel = {
+  fontSize: fontSize.xs, letterSpacing: '2.5px', textTransform: 'uppercase',
+  color: colors.accent, marginBottom: '10px',
+}
 
 export default function ReportCard({ report }) {
   const severityColor = SEVERITY_COLORS[report.severity] ?? { bg: '#333', text: '#fff' }
 
   return (
-    <div style={{ marginTop: '40px', background: '#111318', border: '1px solid #1e2028', borderRadius: '14px', overflow: 'hidden', animation: 'slideUp 0.4s ease' }}>
-      <div style={{ padding: '20px 24px', borderBottom: '1px solid #1e2028', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', background: '#0e1013' }}>
-        <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '22px', letterSpacing: '1.5px', color: '#fff', lineHeight: '1.2', flex: 1 }}>
+    <div style={{ marginTop: '40px', background: colors.surface, border: `1px solid ${colors.border}`, borderRadius: '14px', overflow: 'hidden', animation: 'slideUp 0.4s ease' }}>
+      <div style={{ padding: '20px 24px', borderBottom: `1px solid ${colors.border}`, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', background: colors.surfaceHigh }}>
+        <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '22px', letterSpacing: '1.5px', color: colors.textPrimary, lineHeight: '1.2', flex: 1 }}>
           {report.title}
         </div>
-        <div role="status" aria-label={`Severity: ${report.severity}`} style={{ padding: '5px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', flexShrink: 0, background: severityColor.bg, color: severityColor.text }}>
+        <div role="status" aria-label={`Severity: ${report.severity}`} style={{ padding: '5px 12px', borderRadius: '6px', fontSize: fontSize.xs, fontWeight: 500, letterSpacing: '1.5px', textTransform: 'uppercase', flexShrink: 0, background: severityColor.bg, color: severityColor.text }}>
           {report.severity}
         </div>
       </div>
@@ -28,9 +32,9 @@ export default function ReportCard({ report }) {
           <div style={sectionLabel}>Environment</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
             {Object.entries(report.environment).map(([k, v]) => (
-              <div key={k} style={{ background: '#0b0c0f', border: '1px solid #1e2028', borderRadius: '8px', padding: '12px' }}>
-                <div style={{ fontSize: '10px', color: '#444', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>{k}</div>
-                <div style={{ fontSize: '13px', color: '#aaa' }}>{v}</div>
+              <div key={k} style={{ background: colors.bg, border: `1px solid ${colors.border}`, borderRadius: '8px', padding: '12px' }}>
+                <div style={{ fontSize: fontSize.xs, color: colors.textMuted, letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>{k}</div>
+                <div style={{ fontSize: fontSize.md, color: colors.textSecondary }}>{v}</div>
               </div>
             ))}
           </div>
@@ -41,10 +45,10 @@ export default function ReportCard({ report }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {report.steps.map((step, i) => (
               <div key={i} style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                <div style={{ width: '24px', height: '24px', background: '#1e2028', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: '#ff2d2d', flexShrink: 0, marginTop: '1px' }}>
+                <div style={{ width: '24px', height: '24px', background: colors.border, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: fontSize.xs, color: colors.accent, flexShrink: 0, marginTop: '1px' }}>
                   {i + 1}
                 </div>
-                <div style={{ fontSize: '13px', color: '#aaa', lineHeight: '1.6' }}>{step}</div>
+                <div style={{ fontSize: fontSize.md, color: colors.textSecondary, lineHeight: '1.6' }}>{step}</div>
               </div>
             ))}
           </div>
@@ -54,7 +58,7 @@ export default function ReportCard({ report }) {
           {[['Expected', report.expected], ['Actual', report.actual]].map(([label, text]) => (
             <div key={label}>
               <div style={sectionLabel}>{label}</div>
-              <div style={{ background: '#0b0c0f', border: '1px solid #1e2028', borderRadius: '8px', padding: '14px 16px', fontSize: '13px', color: '#aaa', lineHeight: '1.6' }}>
+              <div style={{ background: colors.bg, border: `1px solid ${colors.border}`, borderRadius: '8px', padding: '14px 16px', fontSize: fontSize.md, color: colors.textSecondary, lineHeight: '1.6' }}>
                 {text}
               </div>
             </div>
@@ -65,7 +69,7 @@ export default function ReportCard({ report }) {
           <div style={sectionLabel}>Tags</div>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {report.tags.map(tag => (
-              <div key={tag} style={{ background: '#1a1c22', border: '1px solid #2a2d38', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: '#888', letterSpacing: '0.5px' }}>
+              <div key={tag} style={{ background: colors.surfaceHigh, border: `1px solid ${colors.borderStrong}`, borderRadius: '6px', padding: '5px 12px', fontSize: fontSize.sm, color: colors.textMuted, letterSpacing: '0.5px' }}>
                 #{tag}
               </div>
             ))}
