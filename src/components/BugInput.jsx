@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { colors, fontSize } from '../theme'
 
 const SparkleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -13,7 +14,7 @@ export default function BugInput({ onGenerate, loading }) {
 
   return (
     <div>
-      <label style={{ display: 'block', fontSize: '11px', letterSpacing: '2px', textTransform: 'uppercase', color: '#555', marginBottom: '12px' }}>
+      <label style={{ display: 'block', fontSize: fontSize.sm, letterSpacing: '2px', textTransform: 'uppercase', color: colors.textMuted, marginBottom: '12px' }}>
         Describe the bug (messy is fine)
       </label>
       <textarea
@@ -22,9 +23,9 @@ export default function BugInput({ onGenerate, loading }) {
         disabled={loading}
         placeholder={`e.g. "the login button doesn't work on mobile after password reset..."`}
         style={{
-          width: '100%', minHeight: '140px', background: '#111318',
-          border: '1px solid #1e2028', borderRadius: '10px', padding: '18px',
-          color: '#e8e6e0', fontFamily: "'DM Mono', monospace", fontSize: '14px',
+          width: '100%', minHeight: '140px', background: colors.surface,
+          border: `1px solid ${colors.border}`, borderRadius: '10px', padding: '18px',
+          color: colors.textSecondary, fontFamily: "'DM Mono', monospace", fontSize: fontSize.base,
           resize: 'vertical', outline: 'none', lineHeight: '1.7',
         }}
       />
@@ -32,7 +33,7 @@ export default function BugInput({ onGenerate, loading }) {
         onClick={() => onGenerate(input)}
         disabled={loading || !input.trim()}
         style={{
-          marginTop: '16px', width: '100%', padding: '16px', background: '#ff2d2d',
+          marginTop: '16px', width: '100%', padding: '16px', background: colors.accent,
           color: '#fff', border: 'none', borderRadius: '10px',
           fontFamily: "'Bebas Neue', sans-serif", fontSize: '20px', letterSpacing: '3px',
           cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
