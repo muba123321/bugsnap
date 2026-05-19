@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { colors, fontSize } from '../theme'
 
 export default function ApiKeySetup({ onSave }) {
   const [key, setKey] = useState('')
@@ -15,7 +16,7 @@ export default function ApiKeySetup({ onSave }) {
 
   return (
     <div style={{
-      minHeight: '100vh', background: '#0b0c0f',
+      minHeight: '100vh', background: colors.bg,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       fontFamily: "'DM Mono', 'Courier New', monospace", padding: '24px',
     }}>
@@ -24,7 +25,7 @@ export default function ApiKeySetup({ onSave }) {
         <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '28px', letterSpacing: '3px', color: '#fff', marginBottom: '8px' }}>
           CONNECT YOUR API KEY
         </div>
-        <div style={{ fontSize: '13px', color: '#555', marginBottom: '28px', lineHeight: '1.7' }}>
+        <div style={{ fontSize: fontSize.md, color: colors.textMuted, marginBottom: '28px', lineHeight: '1.7' }}>
           BugSnap uses the Anthropic Claude API.<br />
           Your key is stored locally — never sent to us.
         </div>
@@ -35,14 +36,14 @@ export default function ApiKeySetup({ onSave }) {
           onChange={e => { setKey(e.target.value); setError('') }}
           onKeyDown={e => e.key === 'Enter' && handleSave()}
           style={{
-            width: '100%', background: '#111318',
-            border: `1px solid ${error ? '#ff2d2d' : '#1e2028'}`,
-            borderRadius: '8px', padding: '14px', color: '#e8e6e0',
-            fontFamily: 'inherit', fontSize: '14px', marginBottom: '8px', outline: 'none',
+            width: '100%', background: colors.surface,
+            border: `1px solid ${error ? colors.accent : colors.border}`,
+            borderRadius: '8px', padding: '14px', color: colors.textPrimary,
+            fontFamily: 'inherit', fontSize: fontSize.base, marginBottom: '8px', outline: 'none',
           }}
         />
         {error && (
-          <div style={{ color: '#ff6b6b', fontSize: '13px', marginBottom: '12px', textAlign: 'left' }}>
+          <div style={{ color: '#ff6b6b', fontSize: fontSize.sm, marginBottom: '12px', textAlign: 'left' }}>
             {error}
           </div>
         )}
@@ -51,7 +52,7 @@ export default function ApiKeySetup({ onSave }) {
           disabled={!key.trim()}
           style={{
             width: '100%', padding: '14px',
-            background: key.trim() ? '#ff2d2d' : '#2a2d38',
+            background: key.trim() ? colors.accent : colors.border,
             color: '#fff', border: 'none', borderRadius: '8px',
             fontFamily: "'Bebas Neue', sans-serif", fontSize: '18px',
             letterSpacing: '3px', cursor: key.trim() ? 'pointer' : 'not-allowed',
@@ -59,7 +60,7 @@ export default function ApiKeySetup({ onSave }) {
         >
           SAVE &amp; CONTINUE
         </button>
-        <div style={{ marginTop: '16px', fontSize: '11px', color: '#333' }}>
+        <div style={{ marginTop: '16px', fontSize: fontSize.sm, color: colors.textMuted }}>
           Get your key at console.anthropic.com
         </div>
       </div>
